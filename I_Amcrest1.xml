@@ -6,7 +6,16 @@
 		local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
 		local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
 		local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
-		
+
+		function getSetVariable(serviceId, name, deviceId, default)
+			local curValue = luup.variable_get(serviceId, name, deviceId)
+			if (curValue == nil) then
+				curValue = default
+				luup.variable_set(serviceId, name, curValue, deviceId)
+			end
+			return curValue
+		end
+	
 		function cmdsend(code, func, arg)
 		local url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.. "@" ..luup.devices[lul_device].ip.. "/cgi-bin/" ..func.. ".cgi?action=start&channel=0&code=".. code .. "&arg1=0&arg2=" .. arg .. "&arg3=0")
 		local b, c, h = http_digest.request(url)
@@ -42,8 +51,8 @@
 			end
 			
 		-- Get username, password and IP
-			luup.devices[lul_device].user = luup.variable_get(CAM_SID, "Username", lul_device) or ""
-			luup.devices[lul_device].pass = luup.variable_get(CAM_SID, "Password", lul_device) or ""
+			luup.devices[lul_device].user = getSetVariable(CAM_SID, "Username", lul_device, "Set your username here")
+			luup.devices[lul_device].pass = getSetVariable(CAM_SID, "Password", lul_device, "Set your password here")
 		-- Set default snapshot URL	
 		--	luup.variable_set(CAM_SID, "URL", "/cgi-bin/snapshot.cgi", lul_device)
 		-- Set Direct Streaming URL for ALTUI
