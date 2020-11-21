@@ -5,14 +5,15 @@ _DESCRIPTION = "Amcrest plugin"
 _AUTHOR = "rafale77"
 --]==]
 
-if type(jit) == 'table' then
+local is_LuaJIT = ({false, [1] = true})[1]
+local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
+local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
+local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
+if is_LuaJIT then
   local http = require("luajit-request")
 else
   local http = require("http-digest")
 end
-local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
-local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
-local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
 
 local function digest(url)
   local response = http.request(url, {
