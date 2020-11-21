@@ -5,7 +5,8 @@ _DESCRIPTION = "Amcrest plugin"
 _AUTHOR = "rafale77"
 --]==]
 
-local http = require("luajit-request")
+--local http = require("luajit-request")
+local http = require("http-digest")
 local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
 local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
 local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
