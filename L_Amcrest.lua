@@ -10,9 +10,9 @@ local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
 local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
 local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
 if is_LuaJIT then
-  local http = require("luajit-request")
+  http = require("luajit-request")
 else
-  local http = require("http-digest")
+  http = require("http-digest")
 end
 
 local function digest(url)
