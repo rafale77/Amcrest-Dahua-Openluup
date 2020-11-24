@@ -9,7 +9,7 @@
 				<name>MoveLeft</name>
 				<job>
 					cmdsend("Left","ptz","1")
-					luup.call_delay("stopPanTiltZoom", stepSize)
+					luup.call_delay("stopPanTiltZoom", tonumber(stepSize))
 				</job>
 			</action>
 			<action>
@@ -17,7 +17,7 @@
 				<name>MoveRight</name>
 				<job>
 					cmdsend("Right","ptz","1")
-					luup.call_delay("stopPanTiltZoom", stepSize)
+					luup.call_delay("stopPanTiltZoom", tonumber(stepSize))
 				</job>
 			</action>
 			<action>
@@ -25,7 +25,7 @@
 				<name>MoveUp</name>
 				<job>
 					cmdsend("Up","ptz","1")
-					luup.call_delay("stopPanTiltZoom", stepSize)
+					luup.call_delay("stopPanTiltZoom", tonumber(stepSize))
 				</job>
 			</action>
 			<action>
@@ -33,7 +33,7 @@
 				<name>MoveDown</name>
 				<job>
 					cmdsend("Down","ptz","1")
-					luup.call_delay("stopPanTiltZoom", stepSize)
+					luup.call_delay("stopPanTiltZoom", tonumber(stepSize))
 				</job>
 			</action>
 			<action>
@@ -43,6 +43,31 @@
 					cmdsend("GotoPreset","ptz",lul_settings.presetNumber)
 				</job>
 			</action>
+
+			<action>
+				<serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+				<name>HorizontalPatrol</name>
+				<job>
+					cmdsend("AutoPanOn","ptz",0)
+				</job>
+			</action>
+			<action>
+				<serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+				<name>VerticalPatrol</name>
+				<job>
+					cmdsend("AutoScanOn","ptz",0)
+				</job>
+			</action>
+			<action>
+				<serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+				<name>StopPatrol</name>
+				<job>
+					cmdsend("AutoPanOff","ptz",0)
+					cmdsend("AutoScanOff","ptz",0)
+					stopPanTiltZoom()
+				</job>
+			</action>
+
 		<action>
 			<serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
 			<name>ZoomOut</name>
