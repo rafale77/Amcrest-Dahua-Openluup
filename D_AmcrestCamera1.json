@@ -67,7 +67,7 @@
 			"Control": [
 				{
 					"ControlGroup":"4",
-					"ControlType": "js_button",
+					"ControlType": "button",
 					"top": "0",
 					"left": "0",
 					"Label": {
@@ -86,7 +86,7 @@
 				},
 				{
 					"ControlGroup":"2",
-					"ControlType": "js_button",
+					"ControlType": "button",
 					"top": "0",
 					"left": "0",
 					"Label": {
@@ -105,7 +105,7 @@
 				},
 				{
 					"ControlGroup":"1",
-					"ControlType": "js_button",
+					"ControlType": "button",
 					"top": "0",
 					"left": "0",
 					"Label": {
@@ -578,7 +578,7 @@
 					"ControlCode": "camera_stop_patrol"
 				},
 				{
-					"ControlType": "js_button",
+					"ControlType": "button",
 					"Label": {
 						"lang_tag": "ui7_lang_archive_snapshot",
 						"text": "Archive snapshot"
