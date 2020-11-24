@@ -11,7 +11,7 @@ local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
 
 function getSetVariable(serviceId, name, deviceId, default)
   local curValue = luup.variable_get(serviceId, name, deviceId)
-  if (curValue == nil) then
+  if (curValue == nil or curValue == "") then
     curValue = default
     luup.variable_set(serviceId, name, curValue, deviceId)
   end
@@ -24,7 +24,7 @@ function cmdsend(code, func, arg)
 end
 
 function snapcmd()
-  url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.."@" ..luup.devices[lul_device].ip.. "/cgi-bin/snapshot.cgi")
+  local url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.."@" ..luup.devices[lul_device].ip.. "/cgi-bin/snapshot.cgi")
   luup.inet.wget(url)
 end
 
@@ -35,9 +35,9 @@ end
 
 --Enable motion and audio detect (true/false)
 function DetectionEnable(action)
-  url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.. "@" ..luup.devices[lul_device].ip.. "/cgi-bin/configManager.cgi?action=setConfig&amp;MotionDetect[0].Enable=" .. action)
+  local url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.. "@" ..luup.devices[lul_device].ip.. "/cgi-bin/configManager.cgi?action=setConfig&amp;MotionDetect[0].Enable=" .. action)
   luup.inet.wget(url)
-  url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.. "@" ..luup.devices[lul_device].ip.. "/cgi-bin/configManager.cgi?action=setConfig&amp;AudioDetect[0].AnomalyDetect.Enable=" .. action .. "&amp;AudioDetect[0].MutationDetect=" .. action)
+  local url = ("http://" ..luup.devices[lul_device].user.. ":" ..luup.devices[lul_device].pass.. "@" ..luup.devices[lul_device].ip.. "/cgi-bin/configManager.cgi?action=setConfig&amp;AudioDetect[0].AnomalyDetect.Enable=" .. action .. "&amp;AudioDetect[0].MutationDetect=" .. action)
   luup.inet.wget(url)
 end
 
@@ -65,19 +65,9 @@ function init(lul_device)
 
 
 -- Set supported camera features (pan/tilt/zoom/presets) and update the 'Commands' variable with the available commands.
-  local commands = "camera_full_screen,camera_left,camera_right,camera_up,camera_down,camera_preset,camera_zoom_in,camera_zoom_out"
+  commands = "camera_full_screen,camera_left,camera_right,camera_up,camera_down,camera_preset,camera_zoom_in,camera_zoom_out"
 
   luup.variable_set("urn:micasaverde-com:serviceId:HaDevice1", "Commands", commands, lul_device)
-
-  local stepSize = luup.variable_get(CAM_SID, "StepSize", lul_device) or ""
-  if (stepSize == "") then
-    stepSize = "1"
-    luup.variable_set(CAM_SID, "StepSize", stepSize, lul_device)
-  end
-
-    local reverseControls = luup.variable_get(CAM_SID, "ReverseControls", lul_device) or ""
-    if (reverseControls == "") then
-      reverseControls = "0"
-      luup.variable_set(CAM_SID, "ReverseControls", reverseControls, lul_device)
-    end
+  stepSize = getSetVariable(CAM_SID, "StepSize", lul_device, "1")
+  reverseControls = getSetVariable(CAM_SID, "ReverseControls", lul_device, "0")
 end
