@@ -57,6 +57,7 @@ function init(lul_device)
 -- Set default snapshot URL
   if not luup.variable_get(CAM_SID, "URL", lul_device) then
 	  luup.variable_set(CAM_SID, "URL", "/cgi-bin/snapshot.cgi", lul_device)
+    luup.variable_set("urn:upnp-org:serviceId:altui1" ,"DirectStreamingURL2", "/cgi-bin/snapshot.cgi", lul_device)
   end
 -- Set Direct Streaming URL for ALTUI
   if not luup.variable_get(CAM_SID, "DirectStreamingURL", lul_device) then
